@@ -4,14 +4,10 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-import static Helper.Data.validLogin;
-import static Helper.Data.validPass;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.PerformException;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
@@ -25,11 +21,10 @@ import org.hamcrest.TypeSafeMatcher;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import Step.AuthStep;
-
 public class Helper {
     /**
      * Perform action of waiting for a specific view id to be displayed.
+     *
      * @param viewId The id of the view to wait for.
      * @param millis The timeout of until when to wait for.
      */
@@ -73,6 +68,7 @@ public class Helper {
             }
         };
     }
+
     public static Matcher<View> withIndex(final Matcher<View> matcher, final int index) {
         AtomicInteger currentIndex = new AtomicInteger(0);
 

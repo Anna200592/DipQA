@@ -15,9 +15,8 @@ import static Page.MainPage.expandOneNews;
 import static Page.MainPage.logOutButton;
 import static Page.MainPage.loveIsAll;
 
-import Helper.Helper;
+
 import Page.MainPage;
-import io.qameta.allure.kotlin.Allure;
 import io.qameta.allure.kotlin.Step;
 import ru.iteco.fmhandroid.R;
 
@@ -54,10 +53,11 @@ public class MainStep {
     public void loveIsAll () {
         loveIsAll.check(matches(isClickable()));
         loveIsAll.perform(click());
-        } //our_mission_title_text_view
+        }
 
     @Step("Открыть текст описания во вкладке Love is all")
     public void DescriptionText () {
         MainPage.loveIsAllDescription.perform(click());
         }
+
 }

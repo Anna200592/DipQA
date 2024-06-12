@@ -9,20 +9,15 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import static Helper.Data.invalidLog;
-import static Helper.Data.invalidPass;
-import static Helper.Data.validLogin;
-import static Helper.Data.validPass;
-import static Helper.Helper.waitDisplayed;
+import static Helper.TestData.validLogin;
+import static Helper.TestData.validPass;
 
 import android.os.SystemClock;
 
 import androidx.test.espresso.NoMatchingViewException;
 
-import Helper.Data;
 import Helper.ToastMatcher;
 import Page.AuthPage;
 import io.qameta.allure.kotlin.Allure;

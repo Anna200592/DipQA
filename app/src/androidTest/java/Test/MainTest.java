@@ -4,10 +4,6 @@ package Test.MainTest;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 
-import static Helper.Data.validLogin;
-import static Helper.Data.validPass;
-
-import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 
@@ -16,22 +12,17 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import Helper.Data;
-import Helper.Helper;
 import Page.MainPage;
 import Step.AuthStep;
 import Step.MainStep;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.junit4.DisplayName;
-import ru.iteco.fmhandroid.R;
 import ru.iteco.fmhandroid.ui.AppActivity;
 
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
 public class MainTest {
-    Data data = new Data();
-    Helper helper = new Helper();
-    AuthStep authStep = new AuthStep();
+
     MainStep mainStep = new MainStep();
     MainPage mainPage = new MainPage();
 

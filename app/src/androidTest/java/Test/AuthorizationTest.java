@@ -6,10 +6,10 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 
 
-import static Helper.Data.invalidLog;
-import static Helper.Data.invalidPass;
-import static Helper.Data.validLogin;
-import static Helper.Data.validPass;
+import static Helper.TestData.invalidLog;
+import static Helper.TestData.invalidPass;
+import static Helper.TestData.validLogin;
+import static Helper.TestData.validPass;
 import static Step.AuthStep.clickButton;
 import static Step.AuthStep.invalidLogin;
 import static Step.AuthStep.invalidPassword;
@@ -24,9 +24,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import Helper.Data;
 import Page.AuthPage;
-import Page.MainPage;
 import Step.AuthStep;
 import Step.MainStep;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
