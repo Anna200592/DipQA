@@ -1,4 +1,4 @@
-package Test.MainTest;
+package Test;
 
 
 import static androidx.test.espresso.assertion.ViewAssertions.matches;

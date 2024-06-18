@@ -1,4 +1,4 @@
-package Test.AuthorizationTest;
+package Test;
 
 
 

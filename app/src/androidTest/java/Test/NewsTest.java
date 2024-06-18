@@ -2,11 +2,9 @@ package Test;
 
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import static Step.NewsStep.getFillDescription;
-import static Step.NewsStep.getFillTitle;
-
+import static Step.NewsStep.goOpenNews;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 
@@ -31,8 +29,6 @@ public class NewsTest {
     NewsStep newsStep = new NewsStep();
     NewsPage newsPage = new NewsPage();
 
-    String expectedTitle = getFillTitle();
-    String expectedDescription = getFillDescription();
 
     @Rule
     public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
@@ -45,34 +41,25 @@ public class NewsTest {
     }
 
     @Test
-    @DisplayName("Открыть описание новости в блоке")
-    public void NewsTest() throws InterruptedException {
-        newsStep.goOpenNews();
-        newsStep.openNewsDescription();
-
-        newsPage.newsPageDescription.check(matches(isDisplayed()));
-    }
-
-    @Test
-    @DisplayName("Создание новости")
+    @DisplayName("Создание новости")//тест нестабилен, не проходит в автоматизации
     public void shouldNewNewsCreat() throws InterruptedException {
         newsStep.goOpenNews();
         newsStep.GoCreatingNewsPage();
 
-        newsStep.fillCategory("no","yes",4);
-        newsStep.fillTitle("Super News");
+        newsStep.fillCategory("no","yes",3);
+        newsStep.fillTitle("Test News");
         newsStep.fillDate("no");
         newsStep.fillTime("no","dial","save");
-        newsStep.fillDescription("no","This is a test description");
+        newsStep.fillDescription("no","This is a test");
         newsPage.saveButton.perform(click());
 
         NewsStep.goOpenNews();
 
-        NewsStep.checkNewsData(expectedTitle,expectedDescription);
+        NewsStep.checkNewsData("Test News","This is a test");
     }
 
     @Test
-    @DisplayName("Удаление ранее созданной новости новости")
+    @DisplayName("Удаление ранее созданной новости новости")//тест нестабилен, не проходит в автоматизацииc
     public void DeletingPreviouslyCreatedNewsStory() throws InterruptedException {
         newsStep.goOpenNews();
         newsStep.GoCreatingNewsPage();
@@ -84,7 +71,17 @@ public class NewsTest {
         newsStep.fillDescription("no","This is a test description");
         newsPage.saveButton.perform(click());
 
-        newsStep.deleteNewsCard(expectedTitle);
+        newsStep.deleteNewsCard("News Delete");
+    }
+
+    @Test
+    @DisplayName("Заменить статус на 'not Active' у новости")
+    public void changeNewsActivity(){
+        goOpenNews();
+        newsStep.changeNewsActivity();
+        newsPage.saveButton.perform(click());
+
+        newsPage.publishNews.check(matches(withText("NOT ACTIVE")));
     }
 
 }

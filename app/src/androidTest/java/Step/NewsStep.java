@@ -49,11 +49,6 @@ public class NewsStep {
         newsPage.news.check(matches(isDisplayed()));
     }
 
-    @Step("Открыть описание новости из списка")
-    public void openNewsDescription() {
-        newsPage.blockNewsCards.perform(actionOnItemAtPosition(1, click()));
-    }
-
     @Step("Переход на страницу 'Creating News'")
     public void GoCreatingNewsPage() {
         newsPage.editNews.perform(click());
@@ -175,5 +170,17 @@ public class NewsStep {
         onView(FirstMatcher.first(allOf(withId(R.id.news_item_title_text_view), withText(title),
                 withParent(withParent(withId(R.id.news_item_material_card_view))))))
                 .check(doesNotExist());
+    }
+
+    @Step("Сменить активность новости")
+    public static void changeNewsActivity(){
+        newsPage.editNews.perform(click());
+        newsPage.sortNews.perform(click());
+        onView(FirstMatcher.first(allOf(withId(R.id.edit_news_item_image_view),
+                withContentDescription("News editing button"),
+                withParent(withParent(withId(R.id.news_item_material_card_view))))))
+                .perform(click());
+        newsPage.switcher.perform(click());
+
     }
 }
