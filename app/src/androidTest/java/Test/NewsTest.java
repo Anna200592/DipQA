@@ -47,7 +47,7 @@ public class NewsTest {
         newsStep.GoCreatingNewsPage();
 
         newsStep.fillCategory("no","yes",3);
-        newsStep.fillTitle("Test News");
+        newsStep.fillTitle("Test Super News");
         newsStep.fillDate("no");
         newsStep.fillTime("no","dial","save");
         newsStep.fillDescription("no","This is a test");
@@ -55,7 +55,7 @@ public class NewsTest {
 
         NewsStep.goOpenNews();
 
-        NewsStep.checkNewsData("Test News","This is a test");
+        NewsStep.checkNewsData("Test Super News","This is a test");
     }
 
     @Test
