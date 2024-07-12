@@ -33,6 +33,7 @@ public class MainTest {
     @Before
     public void logIn() throws InterruptedException {
         AuthStep.logIn();
+        MainStep.loadingHomePage();
     }
 
     @Test

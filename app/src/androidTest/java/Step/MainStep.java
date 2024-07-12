@@ -6,6 +6,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import static Helper.Helper.waitDisplayed;
 import static Page.MainPage.AllNews;
@@ -15,49 +16,48 @@ import static Page.MainPage.expandOneNews;
 import static Page.MainPage.logOutButton;
 import static Page.MainPage.loveIsAll;
 
-
 import Page.MainPage;
-import io.qameta.allure.kotlin.Step;
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 
 public class MainStep {
 
-    @Step("Загрузка главной страницы")
     public static void loadingHomePage() {
-        onView(isRoot()).perform(waitDisplayed(R.id.all_news_text_view, 7000));
+        Allure.step("Загрузка главной страницы");
+        onView(isRoot()).perform(waitDisplayed(withId(R.id.all_news_text_view), 7000));
     }
 
-    @Step("Выход из профиля")
     public static void logOut() {
+        Allure.step("Выход из профиля");
         authorizationButton.perform(click());
         logOutButton.perform(click());
-        }
+    }
 
-    @Step("Развернуть список новостей на главном экране")
     public static void expandNews () {
+        Allure.step("Развернуть список новостей на главном экране");
         expandNews.perform(click());
-        }
+    }
 
-    @Step("Развернуть одну новость на главном экране")
     public void expandOneNews () {
+        Allure.step("Развернуть одну новость на главном экране");
         expandOneNews.perform(click());
-        }
+    }
 
-    @Step("Переход на вкладку All News")
     public void allNews () {
+        Allure.step("Переход на вкладку All News");
         AllNews.check(matches(isClickable()));
         AllNews.perform(click());
-        }
+    }
 
-    @Step("Переход на вкладку Love is all")
     public void loveIsAll () {
+        Allure.step("Переход на вкладку Love is all");
         loveIsAll.check(matches(isClickable()));
         loveIsAll.perform(click());
-        }
-
-    @Step("Открыть текст описания во вкладке Love is all")
+    }
+    
     public void DescriptionText () {
+        Allure.step("Открыть текст описания во вкладке Love is all");
         MainPage.loveIsAllDescription.perform(click());
-        }
+    }
 
 }

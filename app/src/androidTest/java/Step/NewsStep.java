@@ -5,17 +5,21 @@ import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 
+import static Helper.Helper.childAtPosition;
+import static Helper.Helper.waitDisplayed;
 import static Page.NewsPage.okButton;
 
 import android.widget.TimePicker;
@@ -29,9 +33,10 @@ import org.hamcrest.Matchers;
 import java.util.Calendar;
 
 import Helper.FirstMatcher;
+import Helper.ToastMatcher;
 import Page.MainPage;
 import Page.NewsPage;
-import io.qameta.allure.kotlin.Step;
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 
 
@@ -41,24 +46,25 @@ public class NewsStep {
     private static String getFillTitle;
     private static String getFillDescription;
 
-    @Step("Переход на страницу 'News'")//Выполняется в тесте
     public static void goOpenNews() {
+        Allure.step("Переход на страницу 'News'");
         mainPage.mainMenuButton.perform(click());
         mainPage.menuNews.check(matches(isDisplayed()));
         mainPage.menuNews.perform(click());
         newsPage.news.check(matches(isDisplayed()));
     }
 
-    @Step("Переход на страницу 'Creating News'")
+
     public void GoCreatingNewsPage() {
+        Allure.step("Переход на страницу 'Creating News'");
         newsPage.editNews.perform(click());
         newsPage.controlPanel.check(matches(isDisplayed()));
         newsPage.addNews.perform(click());
         newsPage.CreatingTitle.check(matches(isDisplayed()));
     }
 
-    @Step("Заполнение поля Категория при создании новости")
     public static void fillCategory(String emptyCategory, String choiceOfCategory, int category) {
+        Allure.step("Заполнение поля Категория при создании новости");
         String[] categories = {"Объявление", "День рождения", "Зарплата", "Профсоюз", "Праздник", "Массаж",
                 "Благодарность", "Нужна помощь"};
 
@@ -80,8 +86,8 @@ public class NewsStep {
         }
     }
 
-    @Step("Заполнение поля Заголовок при создании новости")
     public static void fillTitle(String title) {
+        Allure.step("Заполнение поля Заголовок при создании новости");
         NewsPage.addCreatingNewsTitle.perform(replaceText(title));
         NewsPage.addCreatingNewsTitle.check(matches(withText(title)));
         getFillTitle = title;
@@ -90,17 +96,16 @@ public class NewsStep {
         return getFillTitle;
     }
 
-
-    @Step("Заполнение поля Дата при создании новости")
     public static void fillDate(String emptyDate) {
+        Allure.step("Заполнение поля Дата при создании новости");
         if ("no".equals(emptyDate)) {
             NewsPage.newsPublishData.perform(click());
             okButton.perform(click());
         }
     }
 
-    @Step("Заполнение поля Время при создании новости")
     public static void fillTime(String emptyTime, String withDialPadOrTextInput, String saveOrCancelTime) {
+        Allure.step("Заполнение поля Время при создании новости");
         if ("no".equals(emptyTime)) {
             NewsPage.newsPublishTime.perform(ViewActions.click());
 
@@ -127,8 +132,8 @@ public class NewsStep {
         }
     }
 
-    @Step("Заполнение поля Описание при создании новости")
     public static void fillDescription(String emptyDescription, String description) {
+        Allure.step("Заполнение поля Описание при создании новости");
         if ("no".equals(emptyDescription)) {
             NewsPage.newsCreatingDescription.perform(replaceText(description));
             NewsPage.newsCreatingDescription.check(matches(withText(description)));
@@ -139,9 +144,8 @@ public class NewsStep {
         return getFillDescription;
     }
 
-
-    @Step("Cоданная новость содержит ранее введенные данные")
     public static void checkNewsData(String title, String description) {
+        Allure.step("Cоданная новость содержит ранее введенные данные");
         onView(FirstMatcher.first(allOf(withId(R.id.news_item_title_text_view), withText(title),
                 withParent(withParent(withId(R.id.news_item_material_card_view))))))
                 .check(matches(withText(title)));
@@ -153,11 +157,11 @@ public class NewsStep {
         onView(FirstMatcher.first(allOf(withId(R.id.news_item_description_text_view), withText(description),
                 withParent(withParent(withId(R.id.news_item_material_card_view))))))
                 .check(matches(withText(description)));
-
     }
 
-    @Step("Удалить созданную новость")
     public static void deleteNewsCard(String title){
+        Allure.step("Удалить созданную новость");
+        onView(isRoot()).perform(waitDisplayed(withText("Control panel"), 7000));
          onView(FirstMatcher.first(allOf(withId(R.id.delete_news_item_image_view),
                  withContentDescription("News delete button"),
                  withParent(withParent(withId(R.id.news_item_material_card_view))))))
@@ -172,8 +176,8 @@ public class NewsStep {
                 .check(doesNotExist());
     }
 
-    @Step("Сменить активность новости")
     public static void changeNewsActivity(){
+        Allure.step("Сменить активность новости");
         newsPage.editNews.perform(click());
         newsPage.sortNews.perform(click());
         onView(FirstMatcher.first(allOf(withId(R.id.edit_news_item_image_view),
@@ -181,6 +185,17 @@ public class NewsStep {
                 withParent(withParent(withId(R.id.news_item_material_card_view))))))
                 .perform(click());
         newsPage.switcher.perform(click());
+        onView(withId(R.id.save_button))
+                .perform(scrollTo(), click());
 
     }
+
+    public static void fillEmptyFields(){
+        Allure.step("Вывод сообщения об ошибке 'Fill empty fields' " +
+                "при создании новости с пустыми полями");
+        onView(withText(R.string.empty_fields)).inRoot(new ToastMatcher())
+                .check(matches(withText("Fill empty fields")));
+    }
+
+
 }

@@ -3,7 +3,6 @@ package Page;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.Matchers.allOf;
@@ -29,7 +28,6 @@ public class MainPage {
 
     //Кнопка Меню
     public static ViewInteraction mainMenuButton = onView(withId(R.id.main_menu_image_button));
-    public static ViewInteraction menuMain = onView(withText("Main"));
     public static ViewInteraction menuNews = onView(allOf(withText("News")));
     public static ViewInteraction menuAbout = onView(withText("About"));
 

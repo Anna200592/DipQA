@@ -10,32 +10,32 @@ import static org.hamcrest.Matchers.allOf;
 import static Step.NewsStep.mainPage;
 
 import Page.AboutPage;
-import io.qameta.allure.kotlin.Step;
+import io.qameta.allure.kotlin.Allure;
 
 public class AboutStep {
 
-    @Step("Переход на страницу 'About'")
     public static void goOpenAbout(){
+        Allure.step("Переход на страницу 'About'");
         mainPage.mainMenuButton.perform(click());
         mainPage.menuAbout.check(matches(isDisplayed()));
         mainPage.menuAbout.perform(click());
     }
 
-    @Step("Видны все элементы на странице")
     public static void allElementsOnPageAreVisible(){
+        Allure.step("Видны все элементы на странице");
         AboutPage.versionTitle.check(matches(allOf(withText("Version:"), isDisplayed())));
         AboutPage.version.check(matches(allOf(withText("1.0.0"), isDisplayed())));
         AboutPage.termsTitle.check(matches(allOf(withText("Terms of use:"), isDisplayed())));
         AboutPage.copyright.check(matches(allOf(withText("© I-Teco, 2022"), isDisplayed())));
     }
 
-    @Step("Проверка кликабельности ссылки")
     public void checkingClickabilityTermsOfUse() {
+        Allure.step("Проверка кликабельности ссылки Terms of use");
         AboutPage.termsUrl.check(matches(isClickable()));
     }
 
-    @Step("Проверка кликабельности ссылки")
     public void checkingClickabilityPrivacyPolicy() {
+        Allure.step("Проверка кликабельности ссылки Privacy Policy");
         AboutPage.privacyPolicy.check(matches(isClickable()));
     }
 }

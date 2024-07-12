@@ -1,8 +1,6 @@
 package Helper;
 
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +9,7 @@ import android.view.ViewParent;
 import androidx.test.espresso.PerformException;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.espresso.util.HumanReadables;
 import androidx.test.espresso.util.TreeIterables;
 
@@ -18,17 +17,12 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Helper {
-    /**
-     * Perform action of waiting for a specific view id to be displayed.
-     *
-     * @param viewId The id of the view to wait for.
-     * @param millis The timeout of until when to wait for.
-     */
-    public static ViewAction waitDisplayed(final int viewId, final long millis) {
+    public static ViewAction waitDisplayed(final Matcher<View> viewMatcher, final long millis) {
         return new ViewAction() {
             @Override
             public Matcher<View> getConstraints() {
@@ -37,7 +31,7 @@ public class Helper {
 
             @Override
             public String getDescription() {
-                return "wait for a specific view with id <" + viewId + "> has been displayed during " + millis + " millis.";
+                return "wait for a specific view matching <" + viewMatcher + "> has been displayed during " + millis + " millis.";
             }
 
             @Override
@@ -45,12 +39,11 @@ public class Helper {
                 uiController.loopMainThreadUntilIdle();
                 final long startTime = System.currentTimeMillis();
                 final long endTime = startTime + millis;
-                final Matcher<View> matchId = withId(viewId);
-                final Matcher<View> matchDisplayed = isDisplayed();
+                final Matcher<View> matchDisplayed = ViewMatchers.isDisplayed();
 
                 do {
                     for (View child : TreeIterables.breadthFirstViewTraversal(view)) {
-                        if (matchId.matches(child) && matchDisplayed.matches(child)) {
+                        if (viewMatcher.matches(child) && matchDisplayed.matches(child)) {
                             return;
                         }
                     }
@@ -69,22 +62,11 @@ public class Helper {
         };
     }
 
-    public static Matcher<View> withIndex(final Matcher<View> matcher, final int index) {
-        AtomicInteger currentIndex = new AtomicInteger(0);
-
-        return new TypeSafeMatcher<View>() {
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("with index: ").appendValue(index);
-                matcher.describeTo(description);
-            }
-
-            @Override
-            public boolean matchesSafely(View view) {
-                return matcher.matches(view) && currentIndex.getAndIncrement() == index;
-            }
-        };
+    public static String generateScreenshotName(String testName) {
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+        return testName + "_" + timestamp + ".png";
     }
+
 
     public static Matcher<View> childAtPosition(final Matcher<View> parentMatcher, final int position) {
         return new TypeSafeMatcher<View>() {
